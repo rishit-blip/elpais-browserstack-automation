@@ -1,0 +1,47 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="BrowserStack Parallel Suite" parallel="tests" thread-count="5">
+
+    <!-- ⭐ REGISTER EXTENT LISTENER -->
+    <listeners>
+        <listener class-name="listeners.ExtentTestListener"/>
+    </listeners>
+
+    <!-- ⭐ TESTS -->
+
+    <test name="Chrome">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="browserstack.BrowserStackTest"/>
+        </classes>
+    </test>
+
+    <test name="Firefox">
+        <parameter name="browser" value="firefox"/>
+        <classes>
+            <class name="browserstack.BrowserStackTest"/>
+        </classes>
+    </test>
+
+    <test name="Safari">
+        <parameter name="browser" value="safari"/>
+        <classes>
+            <class name="browserstack.BrowserStackTest"/>
+        </classes>
+    </test>
+
+    <test name="Android">
+        <parameter name="browser" value="android"/>
+        <classes>
+            <class name="browserstack.BrowserStackTest"/>
+        </classes>
+    </test>
+
+    <test name="iPhone">
+        <parameter name="browser" value="iphone"/>
+        <classes>
+            <class name="browserstack.BrowserStackTest"/>
+        </classes>
+    </test>
+
+</suite>

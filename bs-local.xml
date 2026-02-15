@@ -1,0 +1,16 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Local Suite" parallel="false">
+
+    <test name="Local ElPais Test">
+
+        
+        <parameter name="browser" value="local"/>
+
+
+        <classes>
+            <class name="browserstack.BrowserStackTest"/>
+        </classes>
+
+    </test>
+
+</suite>

@@ -1,0 +1,22 @@
+# Maven build
+target/
+
+# TestNG output
+test-output/
+
+# Logs & reports
+reports/
+screenshots/
+images/
+
+# IDE files
+.settings/
+.classpath
+.project
+.idea/
+
+# OS files
+.DS_Store
+
+# Credentials
+*.properties
