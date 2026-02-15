@@ -20,3 +20,5 @@ images/
 
 # Credentials
 *.properties
+!config.properties
+
