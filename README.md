@@ -1,29 +1,42 @@
-# El País Opinion Scraper — Selenium Automation
+# El País Opinion Scraper — Cloud-Native Selenium Automation Framework
 
 ## Overview
-This project is an automation script built using **Java + Selenium + TestNG** that demonstrates:
 
-- Web Scraping  
-- API Integration (Translation)  
-- Text Processing  
-- Cross-Browser Testing using BrowserStack  
+This project is a production-style automation framework built using **Java, Selenium WebDriver, TestNG, and Maven** that demonstrates end-to-end automation capabilities including web scraping, API integration, text processing, and cross-browser execution on BrowserStack.
 
-The script scrapes the **Opinion section of El País (Spanish news website)**, extracts article data, translates titles to English, analyzes repeated words, and runs across multiple browsers in parallel.
+The framework scrapes the **Opinion section of El País**, extracts article data, validates real articles, translates titles, performs word analysis, and executes tests across multiple browsers and devices in parallel.
 
 ---
 
-## Features
+## Key Capabilities
 
-- Scrapes first 5 articles from El País Opinion section  
-- Extracts **Spanish title and content**  
-- Downloads **cover image** of each article  
-- Translates article titles from **Spanish → English**  
-- Finds repeated words (>2 occurrences) in translated titles  
-- Handles missing titles using fallback  
-- Runs locally using **Headless Selenium**  
-- Executes in **parallel across 5 browsers/devices using BrowserStack**  
-- Auto screenshot on failure  
+- Scrapes first 5 valid articles from El País Opinion section  
+- Validates real articles using multi-fallback title detection  
+- Extracts Spanish titles and article content  
+- Downloads article cover images  
+- Translates titles from Spanish → English  
+- Performs repeated word frequency analysis  
+- Handles missing titles using robust fallback logic  
+- Runs locally using Headless Selenium  
+- Executes in parallel across 5 browsers/devices on BrowserStack  
+- Supports Maven command line execution  
+- Uses configuration-driven execution  
+- Automatically captures screenshots on failures  
+- Includes logging and reporting utilities  
+
+---
+
+## Architecture Highlights
+
+This framework follows industry automation design principles:
+
+- Page Object Model (POM)  
+- Config-driven execution  
+- Separation of test logic and utilities  
+- Parallel execution support  
+- Cloud execution capability  
 - Robust error handling  
+- Modular and scalable structure  
 
 ---
 
@@ -34,95 +47,196 @@ The script scrapes the **Opinion section of El País (Spanish news website)**, e
 - TestNG  
 - Maven  
 - BrowserStack Automate  
-- Google Translate (Public API)  
+- Google Translate Public API  
 - Apache Commons IO  
+- Extent Reports  
+- WebDriverManager  
 
 ---
 
 ## Project Structure
 
 ```
-ElPaisAutomation/
+elpais-browserstack-automation/
 │
 ├── src/main/java
-│   ├── pages/
-│   ├── api/
-│   ├── utils/
-│   ├── analysis/
+│   ├── analysis/        # Word frequency analysis
+│   ├── api/             # Translation API integration
+│   ├── pages/           # Page Object Models
+│   ├── utils/           # Logger, config reader, helpers
 │
 ├── src/test/java
-│   ├── tests/
-│   ├── browserstack/
+│   ├── base/            # WebDriver setup & teardown
+│   ├── browserstack/    # Cross-browser execution
+│   ├── listeners/       # Reporting listeners
+│   ├── tests/           # Test scenarios
+│   ├── utils/           # Screenshot utilities
 │
-├── images/
-├── screenshots/
+├── src/test/resources
+│   ├── config.properties
+│
+├── target/
+├── bs-local.xml
+├── bs-parallel.xml
 ├── pom.xml
-├── testng.xml
 └── README.md
+
+---
+
+## Configuration File
+
+Execution is controlled using `config.properties`.
+
+### Location
+
+```
+src/test/resources/config.properties
+```
+
+### Example
+
+```
+baseUrl=https://elpais.com/opinion/
+headless=false
+browserstack=true
+
+bs.username=YOUR_USERNAME
+bs.key=YOUR_ACCESS_KEY
 ```
 
 ---
 
-## How to Run Locally
+## Article Validation Logic
 
-1. Clone the repository  
-2. Open the project in **Eclipse / IntelliJ**  
-3. Run:
+The framework ensures only real articles are processed by using multiple fallback strategies to extract titles.
+
+This prevents scraping empty or invalid pages.
+
+### Title Detection Strategy
+
+1. Standard H1  
+2. Header H1  
+3. Specific El País class  
+4. Meta tag (og:title)  
+5. JavaScript document.title  
+
+This makes scraping resilient to layout variations.
+
+---
+
+## How to Run Locally (Eclipse / IntelliJ)
+
+Run the local TestNG suite:
 
 ```
-testng.xml → Run As → TestNG Suite
+bs-local.xml → Run As → TestNG Suite
 ```
+
+---
+
+## Run Using Maven (Command Line)
+
+Navigate to project root and run:
+
+```
+mvn clean test
+```
+
+This executes tests using Maven lifecycle.
 
 ---
 
 ## BrowserStack Parallel Execution
 
-The script runs in parallel across the following **5 browsers/devices**:
+The framework runs tests across 5 environments in parallel:
 
-- Chrome (Windows)  
-- Firefox (Windows)  
-- Safari (Mac)  
-- Android (Chrome)  
-- iPhone (Safari)  
+- Chrome — Windows  
+- Firefox — Windows  
+- Safari — macOS  
+- Android — Chrome  
+- iPhone — Safari  
 
-Parallel execution is configured in `testng.xml` using **5 TestNG threads**.
+Parallel execution is configured using TestNG threads.
+
+### Run Parallel Suite
+
+```
+bs-parallel.xml → Run As → TestNG Suite
+```
+
+---
+
+## Execution Modes
+
+### Local Mode
+- Runs using ChromeDriver
+- Supports headless execution
+- Faster feedback loop
+
+### Cloud Mode (BrowserStack)
+- Real devices and browsers
+- Parallel execution
+- Cross-platform validation
 
 ---
 
 ## Sample Output
 
-- Spanish article titles printed  
-- English translated titles printed  
-- Cover images downloaded and saved in `/images`  
-- Repeated word analysis displayed  
-- Stable execution across multiple browsers/devices  
-
----
-
-## Notes
-
-- The script runs in **headless mode locally** and on **real devices via BrowserStack**.  
-- Some external website resources (ads/analytics) may return 404 in logs — these are **not automation failures**.  
-- The automation includes fallback handling for missing titles and ensures stable execution across different layouts.  
+- Spanish titles printed in logs  
+- English translated titles displayed  
+- Images downloaded to `/images`  
+- Word frequency analysis printed  
+- Execution logs with status  
 
 ---
 
 ## Assignment Coverage
 
-This project fulfills all required technical components:
+This project demonstrates all required technical competencies:
 
 ✔ Web scraping using Selenium  
-✔ API integration (Translation)  
-✔ Text processing & analysis  
+✔ API integration for translation  
+✔ Text processing and analysis  
 ✔ Image downloading  
 ✔ Cross-browser testing  
-✔ Parallel execution on BrowserStack (5 threads)  
-✔ Robust automation handling  
+✔ Parallel execution on BrowserStack  
+✔ Config-driven framework  
+✔ Maven execution support  
+✔ Robust fallback logic  
+✔ Cloud execution capability  
+
+---
+
+## Design Considerations
+
+- Handles dynamic page rendering delays  
+- Prevents failures from missing elements  
+- Ignores external resource errors (ads/analytics)  
+- Ensures stable execution across layouts  
+- Supports scalable framework expansion  
+
+---
+
+## Value Proposition
+
+This framework demonstrates how automation can:
+
+- Validate content across browsers  
+- Extract and process real-world data  
+- Integrate external APIs  
+- Execute reliably in cloud environments  
+- Scale with modular architecture  
 
 ---
 
 ## Author
 
-**Rishit Solanki**
+Rishit Solanki  
 
 ---
+
+## Final Notes
+
+This framework is designed to simulate real-world automation scenarios with emphasis on reliability, scalability, and cross-platform execution.
+
+
